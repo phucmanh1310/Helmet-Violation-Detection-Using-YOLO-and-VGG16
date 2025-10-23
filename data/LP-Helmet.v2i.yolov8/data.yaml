@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 3
+names: ['LP', 'helmet', 'no helmet']
+
+roboflow:
+  workspace: object-detection-project-fn2vr
+  project: lp-helmet
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/object-detection-project-fn2vr/lp-helmet/dataset/2

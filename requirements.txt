@@ -1,0 +1,14 @@
+
+
+ultralytics
+tensorflow
+keras
+opencv-python
+roboflow
+keyboard
+numpy
+pandas
+matplotlib
+torch
+Pillow
+easyocr

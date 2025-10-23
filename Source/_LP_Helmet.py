@@ -159,15 +159,13 @@ def image_detect(model, path):
     check_nohelmet = 0
     helmet_img = 1
     plate_img = 1
-    results = model.predict(path,confidence=70, overlap = 50)
+    results = model.predict(path, confidence=40, overlap=50)
     results_json = results.json()
     if results_json['predictions'] == []:
         print(f"No predictions for {path} at confidence: {70} and overlap {50}")
         return np.array([]), np.array([]), np.array([]), np.array([])
     else:
-        original_file = os.path.basename(path).split('/')[-1]
-        results.save(fr"D:\AI-project\Helmet-Violation\img\LP\{original_file}")
-    # Show the results
+        # Không lưu ảnh kết quả để tránh tạo nhiều file
         im = cv2.imread(path)
         # print(results)
         for r in results:

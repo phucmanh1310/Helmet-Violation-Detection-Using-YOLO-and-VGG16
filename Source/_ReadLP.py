@@ -11,7 +11,7 @@ def recognition_by_path(model, chartest):
     listChar = []
     for i in range(len(chartest)):
         image_resize = cv2.resize(chartest[i], (char_width, char_height)) #w, h
-        cv2.imwrite(f"image_cropped\Char\img{i}.jpg",image_resize)
+        cv2.imwrite(f"image_cropped/Char/img{i}.jpg",image_resize)
         prep = model.predict(image_resize.reshape(1,char_height,char_width,1))
         predicted_class = np.argmax(prep)
         predicted_label = img_label[predicted_class]

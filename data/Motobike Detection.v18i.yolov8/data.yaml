@@ -1,0 +1,13 @@
+train: train/images
+val: train/images
+test: train/images
+
+nc: 1
+names: ["motobike"]
+
+roboflow:
+  workspace: cdio-zmfmj
+  project: motobike-detection
+  version: 18
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/cdio-zmfmj/motobike-detection/dataset/18

@@ -55,15 +55,28 @@ def fakeData(lp, file_path):
         count+=1
 
 
-def get_client_info(lp_info, file_path):
-    data = pd.read_csv(file_path)
+def get_client_info(lp_info, file_path="LP_Character_Label.csv"):
+    """Lấy thông tin khách hàng từ biển số xe"""
+    if not os.path.exists(file_path):
+        # Tạo file CSV mẫu nếu chưa tồn tại
+        sample_data = {
+            'STT': [1, 2, 3],
+            'Name': ['Nguyen Van A', 'Tran Thi B', 'Le Van C'],
+            'Gmail': ['a@gmail.com', 'b@gmail.com', 'c@gmail.com'],
+            'Address': ['Ha Noi', 'Ho Chi Minh', 'Da Nang'],
+            'LP': ['29A-12345', '51B-67890', '43C-11111']
+        }
+        df = pd.DataFrame(sample_data)
+        df.to_csv(file_path, index=False)
+        print(f"Đã tạo file dữ liệu mẫu: {file_path}")
+
     try:
+        data = pd.read_csv(file_path)
         row = data[data['LP'] == lp_info].iloc[0]
         ten = row['Name']
         gmail = row['Gmail']
-
         return ten, gmail
-    except IndexError:
+    except (IndexError, FileNotFoundError):
         return None, None
 
 def delete_files(path):

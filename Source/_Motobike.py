@@ -6,14 +6,13 @@ import glob
 import _myFunc
 from PIL import Image
 
-def image_detect(model, image, folder_result, screen_threshold = 0.2, index_img = 0):
+def image_detect(model, image, screen_threshold = 0.2, index_img = 0):
     img = image.copy()
-    results = model.predict(image, save=True, imgsz=640, conf=0.7, device = "CPU") #Detect motobike
+    results = model.predict(image, save=False, imgsz=640, conf=0.4) # Detect motobike, do not save YOLO runs
 
-    parent_dir = r"runs/detect"
-    latest_image_path = _myFunc.get_latest_image_path(parent_dir)
-    latest_img = cv2.imread(latest_image_path)
-    img_width, img_height, _ = latest_img.shape
+    # Work directly on the current frame instead of reading YOLO saved image
+    latest_img = img.copy()
+    img_height, img_width, _ = latest_img.shape
     # screen_threshold_x = int(img_width * screen_threshold)
     screen_threshold_y = int(img_height * screen_threshold)
     cv2.line(latest_img, (0, screen_threshold_y), (img_width*2, screen_threshold_y), (0, 255, 0), 2) #Draw threshold line
@@ -26,12 +25,14 @@ def image_detect(model, image, folder_result, screen_threshold = 0.2, index_img 
                 center_x = (x_min + x_max) // 2
                 center_y = (y_min + y_max) // 2
                 cv2.circle(latest_img, (center_x, center_y), 5, (0, 255, 0), -1)
-                motobike_path = fr'D:\AI-project\Helmet-Violation\img\Moto\{folder_result}\image{index_img}_motobike{idx}.jpg'
+                motobike_path = f'img/Moto/image{index_img}_motobike{idx}.jpg'
                 if center_y >= screen_threshold_y:
                     cropped_image = image[y_min:y_max, x_min:x_max]
                     cv2.imwrite(motobike_path, cropped_image)
 
-        cv2.imwrite(fr'D:\AI-project\Helmet-Violation\img\Thresh_result\{folder_result}\image{index_img}.jpg', latest_img) #Save threshold with center point
+        # Tạo thư mục nếu chưa tồn tại
+        os.makedirs('img/Thresh_result', exist_ok=True)
+        cv2.imwrite(f'img/Thresh_result/image{index_img}.jpg', latest_img) #Save threshold with center point
         return img
     else:
         return []
