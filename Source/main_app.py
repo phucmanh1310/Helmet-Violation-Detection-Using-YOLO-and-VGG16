@@ -2,19 +2,36 @@
 
 import cv2
 import numpy as np
-from ultralytics import YOLO
 import easyocr
 from pathlib import Path
 import shutil
 import argparse
+import torch
+
+# Fix cho PyTorch 2.6+ weights_only issue
+import ultralytics.nn.tasks as tasks
+original_torch_safe_load = tasks.torch_safe_load
+
+def patched_torch_safe_load(weight):
+    """Patch để load YOLO models với PyTorch 2.6+"""
+    try:
+        file = str(weight)
+        return torch.load(file, map_location='cpu', weights_only=False), file
+    except Exception as e:
+        print(f"Error loading {weight}: {e}")
+        raise
+
+tasks.torch_safe_load = patched_torch_safe_load
+
+from ultralytics import YOLO
 
 # --- Configuration ---
 # Paths to local YOLOv8 models
-MOTO_MODEL_PATH = Path('models/Motov10l.pt') # Use the standard YOLOv8 model for better general detection
+MOTO_MODEL_PATH = Path('models/Motov10l.pt') 
 HELMET_LP_MODEL_PATH = Path('models/HelmetLP.pt')
 
 # Confidence thresholds
-MOTO_CONF = 0.4 # Lowered threshold to increase sensitivity
+MOTO_CONF = 0.4 
 HELMET_LP_CONF = 0.4
 
 # --- Helper Functions ---

@@ -12,3 +12,4 @@ matplotlib
 torch
 Pillow
 easyocr
+gradio
