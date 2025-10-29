@@ -1,9 +1,9 @@
-train: ../train/images
-val: ../valid/images
-test: ../test/images
+train: train/images
+val: valid/images
+test: test/images
 
 nc: 3
-names: ['LP', 'helmet', 'no helmet']
+names: ["LP", "helmet", "no helmet"]
 
 roboflow:
   workspace: object-detection-project-fn2vr

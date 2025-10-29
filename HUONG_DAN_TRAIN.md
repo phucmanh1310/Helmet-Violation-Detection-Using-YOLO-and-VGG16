@@ -73,18 +73,18 @@ III. Train YOLOv8 cho Motobike (Model 1)
 1. Lệnh khuyến nghị (GPU)
    & "C:\Users\PhucManh\AppData\Local\Programs\Python\Python313\Scripts\yolo.exe" detect train ^
    model=yolov8n.pt ^
-   data="data\motobike_yolo\data.yaml" ^
+   data="data\Motobike Detection.v18i.yolov8\data.yaml" ^
    epochs=50 imgsz=640 device=0
 
 2. Nếu GPU thiếu bộ nhớ (WinError 1455, OOM), dùng cấu hình nhẹ hơn
-   & "C:\Users\PhucManh\AppData\Local\Programs\Python\Python313\Scripts\yolo.exe" detect train ^
+   & "C:\Users\PhucMan
+   h\AppData\Local\Programs\Python\Python313\Scripts\yolo.exe" detect train ^
    model=yolov8n.pt ^
-   data="data\motobike_yolo\data.yaml" ^
+   data="data\Motobike Detection.v18i.yolov8\data.yaml" ^
    epochs=30 imgsz=512 device=0 batch=8 workers=0 amp=False
 
 3. Sau khi train xong, copy model tốt nhất
-   New-Item -ItemType Directory -Force -Path models | Out-Null
-   Copy-Item "runs\detect\train\weights\best.pt" "models\Motov10l.pt" -Force
+   $best = Get-ChildItem -Path runs\detect -Recurse -Filter best.pt | Sort-Object LastWriteTime -Descending | Select-Object -First 1 New-Item -ItemType Directory -Force -Path models | Out-Null Copy-Item $best.FullName "models\Motov10l.pt" -Force Write-Host "Copied from $($best.FullName) -> models\Motov10l.pt"
    (Nếu Ultralytics tạo train2/train3…, hãy thay đúng đường dẫn.)
 
 4. (Tùy chọn) Đánh giá nhanh model
@@ -100,10 +100,7 @@ IV. Train YOLOv8 cho Helmet + LP (Model 2)
    epochs=50 imgsz=640 device=0
 
 2. Nếu GPU thiếu bộ nhớ
-   & "C:\Users\PhucManh\AppData\Local\Programs\Python\Python313\Scripts\yolo.exe" detect train ^
-   model=yolov8n.pt ^
-   data="data\lp_helmet_yolo\data.yaml" ^
-   epochs=30 imgsz=512 device=0 batch=8 workers=0 amp=False
+   & "C:\Users\PhucManh\AppData\Local\Programs\Python\Python313\Scripts\yolo.exe" detect train model=yolov8n.pt data="data\LP-Helmet.v2i.yolov8\data.yaml" epochs=30 imgsz=512 device=0 batch=8 workers=0 amp=False
 
 3. Copy model tốt nhất vào models/HelmetLP.pt
    Copy-Item "runs\detect\train\weights\best.pt" "models\HelmetLP.pt" -Force
