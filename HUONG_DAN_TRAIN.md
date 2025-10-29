@@ -1,5 +1,5 @@
 # Hướng dẫn TRAIN mô hình (Full Local) trước khi kiểm tra ảnh/video
-
+2312312312312
 Tài liệu này hướng dẫn bạn train 2 mô hình YOLOv8 để chạy hoàn toàn local:
 
 - Model 1: Motobike Detection (phát hiện xe máy) → file đầu ra: models/Motov10l.pt
