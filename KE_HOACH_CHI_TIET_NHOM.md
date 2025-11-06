@@ -12,8 +12,8 @@
 
 | Thành viên         | Vai trò                 | Trách nhiệm chính                                         |
 | ------------------ | ----------------------- | --------------------------------------------------------- |
-| **Person A (Bạn)** | **Theory Lead**         | Tìm hiểu LÝ THUYẾT sâu, tạo tài liệu, giảng giải cho nhóm |
-| **Person B**       | **Dev & Training Lead** | Code, training, optimization, debugging                   |
+| **Minh Thư ** | **Theory Lead**         | Tìm hiểu LÝ THUYẾT sâu, tạo tài liệu|
+| **Mạnh**       | **Dev & Training Lead** | Code, training, optimization, debugging                   |
 | **Person C**       | **Data Lead 1**         | Thu thập data, labeling model 1 (Helmet/LP)               |
 | **Person D**       | **Data Lead 2**         | Thu thập data, labeling model 2, data quality             |
 
