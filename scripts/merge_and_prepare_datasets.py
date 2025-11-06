@@ -148,7 +148,6 @@ names: ['helmet', 'nohelmet', 'motorcyclist', 'licenseplate']
 
 # Merged from:
 # - Helmet_detect.v2i.yolov8
-# - Testing_AIP.v1i.yolov8
 # - helmet-detection-and-license-plate-recognition.v6i.yolov8
 """
     (dst_root / "data.yaml").write_text(yaml_content, encoding="utf-8")
@@ -159,6 +158,74 @@ names: ['helmet', 'nohelmet', 'motorcyclist', 'licenseplate']
     print(f"   1: nohelmet")
     print(f"   2: motorcyclist")
     print(f"   3: licenseplate")
+
+
+def create_stage2_fullscene_view(merged_root: Path, stage2_root: Path):
+    """Tạo view chỉ có helmet/nohelmet/licenseplate (ids 0,1,3) cho Stage 2 - Full Scene"""
+    
+    print("\n" + "=" * 70)
+    print("BƯỚC 3: TẠO VIEW CHO STAGE 2 - FULL SCENE (HELMET/NOHELMET/LP)")
+    print("=" * 70)
+    
+    # Remap: helmet(0)->0, nohelmet(1)->1, licenseplate(3)->2
+    remap = {0: 0, 1: 1, 3: 2}
+    
+    for split in ["train", "valid", "test"]:
+        src_images = merged_root / split / "images"
+        src_labels = merged_root / split / "labels"
+        dst_images = stage2_root / split / "images"
+        dst_labels = stage2_root / split / "labels"
+        
+        ensure_dir(dst_images)
+        ensure_dir(dst_labels)
+        
+        count = 0
+        for img_path in src_images.glob("*.*"):
+            if img_path.suffix.lower() not in IMG_EXTS:
+                continue
+            
+            stem = img_path.stem
+            src_label = src_labels / f"{stem}.txt"
+            
+            # Lọc classes 0,1,3 và remap
+            if src_label.exists():
+                with src_label.open("r", encoding="utf-8") as f:
+                    lines = []
+                    for line in f:
+                        parts = line.strip().split()
+                        if len(parts) >= 5:
+                            cid = int(parts[0])
+                            if cid in remap:
+                                parts[0] = str(remap[cid])
+                                lines.append(" ".join(parts[:5]))
+                
+                if lines:  # Chỉ copy nếu có helmet/nohelmet/LP
+                    # Copy image (hardlink nếu được)
+                    dst_img = dst_images / img_path.name
+                    try:
+                        dst_img.hardlink_to(img_path)
+                    except Exception:
+                        shutil.copy2(img_path, dst_img)
+                    
+                    # Write filtered label
+                    (dst_labels / f"{stem}.txt").write_text("\n".join(lines), encoding="utf-8")
+                    count += 1
+        
+        print(f"  ✅ {split}: {count} images with helmet/nohelmet/LP")
+    
+    # Tạo data.yaml cho Stage 2 Full Scene
+    yaml_content = """train: train/images
+val: valid/images
+test: test/images
+
+nc: 3
+names: ['helmet', 'nohelmet', 'licenseplate']
+
+# Full scene images (không crop ROI)
+"""
+    (stage2_root / "data.yaml").write_text(yaml_content, encoding="utf-8")
+    
+    print(f"\n✅ Stage 2 Full Scene view saved to: {stage2_root}")
 
 
 def create_stage1_view(merged_root: Path, stage1_root: Path):
@@ -228,41 +295,68 @@ def main():
     data_dir = Path("data")
     merged_dir = data_dir / "_merged_all"
     stage1_dir = data_dir / "_stage1_motorcyclist"
+    stage2_fullscene_dir = data_dir / "_stage2_helmet_lp_fullscene"
     
-    # Datasets cần merge
+    # Datasets cần merge (chỉ 2 datasets thực tế có)
     datasets_to_merge = [
         "Helmet_detect.v2i.yolov8",
-        "Testing_AIP.v1i.yolov8",
         "helmet-detection-and-license-plate-recognition.v6i.yolov8",
     ]
     
     # Step 1: Merge
     merge_dataset(datasets_to_merge, merged_dir)
     
-    # Step 2: Create Stage 1 view
+    # Step 2: Create Stage 1 view (Motorcyclist)
     create_stage1_view(merged_dir, stage1_dir)
     
+    # Step 3: Create Stage 2 Full Scene view
+    create_stage2_fullscene_view(merged_dir, stage2_fullscene_dir)
+    
     print("\n" + "=" * 70)
-    print("HOÀN TẤT! TIẾP THEO:")
+    print("HOÀN TẤT! BẠN CÓ 2 MODELS VỚI 3 DATASET VIEWS:")
     print("=" * 70)
-    print("\n1️⃣  Tạo Stage 2 ROI crops:")
-    print("    py -3.13 scripts/make_roi_crops_from_class.py \\")
-    print("      --src-root data/_merged_all \\")
-    print("      --dst-root data/_stage2_helmet_lp_crops \\")
-    print("      --parent-class 2 \\")
-    print("      --keep-classes 0 1 3 \\")
-    print("      --remap 0 1 2 \\")
+    print("\n📁 Dataset Structure:")
+    print("   ✅ data/_merged_all/              (Merged dataset gốc - 4 classes)")
+    print("   ✅ data/_stage1_motorcyclist/     (Model 1 - 1 class: motorcyclist)")
+    print("   ✅ data/_stage2_helmet_lp_fullscene/ (Model 2 View A - 3 classes full scene)")
+    
+    print("\n" + "=" * 70)
+    print("TIẾP THEO - TẠO ROI CROPS CHO MODEL 2 (View B - Recommended):")
+    print("=" * 70)
+    print("\n1️⃣  Tạo Stage 2 ROI crops (chính xác hơn):")
+    print("    py -3.13 scripts/make_roi_crops_from_class.py `")
+    print("      --src-root data/_merged_all `")
+    print("      --dst-root data/_stage2_helmet_lp_crops `")
+    print("      --parent-class 2 `")
+    print("      --keep-classes 0 1 3 `")
+    print("      --remap 0 1 2 `")
     print("      --padding 0.18")
     
-    print("\n2️⃣  Train Stage 1 (Motorcyclist):")
-    print("    yolo detect train model=yolov8n.pt \\")
-    print("      data=data/_stage1_motorcyclist/data.yaml \\")
-    print("      epochs=100 imgsz=640 batch=16")
+    print("\n" + "=" * 70)
+    print("TRAINING - 2 MODELS:")
+    print("=" * 70)
     
-    print("\n3️⃣  Train Stage 2 (Helmet/NoHelmet/LP):")
-    print("    yolo detect train model=yolov8n.pt \\")
-    print("      data=data/_stage2_helmet_lp_crops/data.yaml \\")
-    print("      epochs=150 imgsz=768 batch=16")
+    print("\n🚀 MODEL 1: Motorcyclist Detection")
+    print("    yolo detect train model=yolov8n.pt `")
+    print("      data=data/_stage1_motorcyclist/data.yaml `")
+    print("      epochs=100 imgsz=640 batch=16 `")
+    print("      project=runs/detect name=model1_motorcyclist")
+    
+    print("\n🚀 MODEL 2: Helmet/NoHelmet/LP Detection")
+    print("\n   Option A - Full Scene (đơn giản, ít chính xác):")
+    print("    yolo detect train model=yolov8n.pt `")
+    print("      data=data/_stage2_helmet_lp_fullscene/data.yaml `")
+    print("      epochs=150 imgsz=640 batch=16 `")
+    print("      project=runs/detect name=model2_helmet_lp_fullscene")
+    
+    print("\n   Option B - ROI Crops (KHUYẾN NGHỊ - chính xác hơn):")
+    print("    yolo detect train model=yolov8n.pt `")
+    print("      data=data/_stage2_helmet_lp_crops/data.yaml `")
+    print("      epochs=150 imgsz=768 batch=16 `")
+    print("      project=runs/detect name=model2_helmet_lp_crops")
+    
+    print("\n   Option C - So sánh cả 2:")
+    print("    Train cả Full Scene và Crops, rồi đánh giá xem cái nào tốt hơn!")
     
     print("\n" + "=" * 70)
 
