@@ -1,0 +1,10 @@
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 4
+names: ['helmet', 'nohelmet', 'motorcyclist', 'licenseplate']
+
+# Merged from:
+# - Helmet_detect.v2i.yolov8
+# - helmet-detection-and-license-plate-recognition.v6i.yolov8

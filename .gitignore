@@ -1,0 +1,118 @@
+# ============================================================================
+# DATA DIRECTORIES - Ignore datasets (too large for Git)
+# Keep only README and YAML files for documentation
+# ============================================================================
+# Ignore all files in data/ subdirectories
+data/*/images/
+data/*/labels/
+data/**/*.jpg
+data/**/*.jpeg
+data/**/*.png
+data/**/*.txt
+# Keep README and YAML files
+!data/**/README*
+!data/**/*.yaml
+!data/**/data.yaml
+
+# Ignore all dataset directories
+data/_stage1_motorcyclist/
+data/_stage2_helmet_lp_crops/
+data/_stage2_helmet_lp_fullscene/
+data/merged_dataset/
+
+# ============================================================================
+# TRAINING OUTPUTS
+# ============================================================================
+runs/
+*.pt
+!models/*.pt
+
+# Keep only final models
+models/yolov8n.pt
+models/yolo11n.pt
+
+# ============================================================================
+# PYTHON
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ============================================================================
+# JUPYTER NOTEBOOK
+# ============================================================================
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*.ipynb
+
+# ============================================================================
+# IDE
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============================================================================
+# TEMPORARY FILES
+# ============================================================================
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+
+# ============================================================================
+# RESULTS & OUTPUTS
+# ============================================================================
+img/test/
+img/Thresh_result/
+results/
+output/
+*.csv
+*.json
+!config/*.json
+
+# ============================================================================
+# SYSTEM FILES
+# ============================================================================
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ============================================================================
+# WEIGHTS & CHECKPOINTS (except final models)
+# ============================================================================
+*.weights
+*.onnx
+*.engine
+*.tflite
+checkpoints/

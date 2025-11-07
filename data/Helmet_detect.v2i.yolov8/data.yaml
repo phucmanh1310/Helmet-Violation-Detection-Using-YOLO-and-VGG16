@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['Helmet', 'Motorcyclist', 'Non_helmet', 'Plate']
+
+roboflow:
+  workspace: minhduc-pgbna
+  project: helmet_detect-bqzqt
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/minhduc-pgbna/helmet_detect-bqzqt/dataset/2

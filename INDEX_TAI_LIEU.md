@@ -173,11 +173,6 @@ Helmet-Violation-Detection-Using-YOLO-and-VGG16/
 
 ## ⚠️ LƯU Ý QUAN TRỌNG
 
-### **Files đã XÓA (không dùng nữa):**
-
-- ❌ `HUONG_DAN_TRAIN.md` - Đã thay bằng `HUONG_DAN_TRAIN_2_MODELS.md`
-- ❌ `HUONG_DAN_CAI_THIEN_MODEL.md` - Quá dài, không còn phù hợp
-
 ### **Thứ tự ưu tiên đọc:**
 
 1. 🥇 `README.md` - Bắt buộc đọc đầu tiên
