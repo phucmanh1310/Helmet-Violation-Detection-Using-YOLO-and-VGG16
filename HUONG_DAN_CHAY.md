@@ -1,3 +1,37 @@
+## Khắc phục lỗi chạy CLI (yolo) thường gặp
+
+### 1) Sai đường dẫn model
+
+Nếu báo lỗi không tìm thấy file như:
+
+```
+FileNotFoundError: [Errno 2] No such file or directory: 'runs\\detect\\model1_motorcyclist\\weights\\best.pt'
+```
+
+Hãy dùng đúng thư mục phiên bản gần nhất, ví dụ sau khi train xong lần 4:
+
+```powershell
+yolo detect predict model=runs\detect\model1_motorcyclist4\weights\best.pt source=img\test\test1.jpg conf=0.4
+```
+
+### 2) Lỗi PyTorch 2.6: Weights only load failed
+
+PyTorch 2.6 đổi mặc định `torch.load(weights_only=True)` khiến checkpoint Ultralytics cũ không load được qua CLI. Có 2 hướng xử lý:
+
+- Cách A (khuyên dùng): dùng script đã chuẩn bị sẵn có allowlist `DetectionModel` khi load
+
+```powershell
+# Validate (dùng đúng interpreter py -3.13)
+py -3.13 scripts\val_with_safe_globals.py val --model "runs\detect\model1_motorcyclist4\weights\best.pt" --data "data\_stage1_motorcyclist\data.yaml" --imgsz 640
+
+# Predict (ví dụ)
+py -3.13 scripts\val_with_safe_globals.py predict --model "runs\detect\model1_motorcyclist4\weights\best.pt" --source "img\test\test1.jpg" --conf 0.4 --imgsz 640
+```
+
+- Cách B: dùng torch 2.5.x hoặc Python 3.10/3.11 để lệnh `yolo` hoạt động như trước (không cần allowlist).
+
+Nếu bạn sử dụng trực tiếp CLI `yolo`, hãy luôn kiểm tra lại đường dẫn `model=` và `data=`.
+
 # Hướng dẫn chạy dự án Helmet Violation Detection (Full Local)
 
 Tài liệu này hướng dẫn bạn cách chạy ứng dụng phát hiện vi phạm mũ bảo hiểm sau khi đã được tái cấu trúc để chạy hoàn toàn trên máy cá nhân (local).

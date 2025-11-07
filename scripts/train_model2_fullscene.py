@@ -28,7 +28,7 @@ def main():
     config = {
         'model': 'yolov8n.pt',
         'data': 'data/_stage2_helmet_lp_fullscene/data.yaml',
-        'epochs': 150,
+        'epochs': 50,
         'imgsz': 640,
         'batch': 16,
         'optimizer': 'AdamW',

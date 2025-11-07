@@ -31,8 +31,9 @@ tasks.torch_safe_load = patched_torch_safe_load
 from ultralytics import YOLO
 
 # --- Configuration ---
-MOTO_MODEL_PATH = Path('models/Motov10l.pt')
-HELMET_LP_MODEL_PATH = Path('models/HelmetLP.pt')
+# Đường dẫn tương đối từ thư mục Source
+MOTO_MODEL_PATH = Path(__file__).parent.parent / 'models' / 'Motov10l.pt'
+HELMET_LP_MODEL_PATH = Path(__file__).parent.parent / 'models' / 'HelmetLP.pt'
 MOTO_CONF = 0.4
 HELMET_LP_CONF = 0.4
 
@@ -127,9 +128,9 @@ def process_image_detection(input_image):
                 
                 if class_name == 'helmet':
                     has_helmet = True
-                elif class_name == 'no helmet':
+                elif class_name == 'nohelmet':
                     has_no_helmet = True
-                elif class_name == 'LP':
+                elif class_name == 'licenseplate':
                     # Cắt và OCR biển số
                     lp_x1, lp_y1, lp_x2, lp_y2 = map(int, det_box.xyxy[0])
                     lp_crop = moto_crop[lp_y1:lp_y2, lp_x1:lp_x2]
@@ -389,8 +390,8 @@ if __name__ == "__main__":
     print("🚀 Khởi động giao diện web...")
     print("="*50 + "\n")
     demo.launch(
-        server_name="0.0.0.0",  # Cho phép truy cập từ mạng nội bộ
-        server_port=7860,
+        server_name="127.0.0.1",  # Local only
+        server_port=None,  # Tự động tìm port trống
         share=False,  # Đặt True nếu muốn chia sẻ public
         show_error=True
     )

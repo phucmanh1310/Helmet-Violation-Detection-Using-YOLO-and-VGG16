@@ -28,7 +28,7 @@ def main():
     config = {
         'model': 'yolov8n.pt',
         'data': 'data/_stage2_helmet_lp_crops/data.yaml',
-        'epochs': 150,
+        'epochs': 50,
         'imgsz': 768,  # Higher resolution for small objects
         'batch': 16,
         'optimizer': 'AdamW',

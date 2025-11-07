@@ -33,7 +33,7 @@ def main():
     config = {
         'model': 'yolov8n.pt',
         'data': 'data/_stage1_motorcyclist/data.yaml',
-        'epochs': 100,
+        'epochs': 50,
         'imgsz': 640,
         'batch': 16,
         'optimizer': 'AdamW',

@@ -1,3 +1,47 @@
+## Khắc phục lỗi sau khi train (PyTorch 2.6 + đường dẫn model)
+
+Nếu bạn gặp các lỗi sau khi train xong và chạy lệnh `yolo` để val/predict:
+
+- FileNotFoundError: 'runs\\detect\\model1_motorcyclist\\weights\\best.pt'
+- \_pickle.UnpicklingError: Weights only load failed (PyTorch 2.6)
+
+Hãy làm theo các bước sau:
+
+1. Kiểm tra đúng đường dẫn model
+
+- Thư mục chạy gần nhất của bạn là `runs/detect/model1_motorcyclist4/weights/`. Vì vậy đường dẫn đúng là:
+  - Model: `runs\detect\model1_motorcyclist4\weights\best.pt`
+  - Data (stage 1): `data\_stage1_motorcyclist\data.yaml`
+
+2. Khắc phục lỗi PyTorch 2.6 (weights_only)
+
+Từ PyTorch 2.6, `torch.load` mặc định dùng `weights_only=True` khiến việc load checkpoint Ultralytics cũ bị chặn. Bạn có 2 lựa chọn an toàn:
+
+- Cách A (khuyên dùng): Dùng script đã chuẩn bị sẵn để allowlist lớp `DetectionModel` khi load
+
+  PowerShell (Windows):
+
+  ```powershell
+  # Validate (dùng đúng interpreter py -3.13 thay vì python)
+  py -3.13 scripts\val_with_safe_globals.py val --model "runs\detect\model1_motorcyclist4\weights\best.pt" --data "data\_stage1_motorcyclist\data.yaml" --imgsz 640
+
+  # Predict (ví dụ 1 ảnh)
+  py -3.13 scripts\val_with_safe_globals.py predict --model "runs\detect\model1_motorcyclist4\weights\best.pt" --source "img\test\test1.jpg" --conf 0.4 --imgsz 640
+  ```
+
+  Ghi chú: Script này dùng context `torch.serialization.safe_globals([DetectionModel])` nên hoạt động bình thường với PyTorch 2.6.
+
+- Cách B: Dùng môi trường torch cũ (không khuyến khích nếu bạn cần 2.6)
+
+  - Cài torch 2.5.x và/hoặc dùng Python 3.10 hoặc 3.11, khi đó lệnh CLI `yolo detect val/predict` sẽ load checkpoint mà không cần patch.
+
+Nếu vẫn muốn dùng trực tiếp CLI `yolo`, hãy đảm bảo chỉ ra đúng đường dẫn model:
+
+```powershell
+yolo detect val model=runs\detect\model1_motorcyclist4\weights\best.pt data=data\_stage1_motorcyclist\data.yaml
+yolo detect predict model=runs\detect\model1_motorcyclist4\weights\best.pt source=img\test\test1.jpg conf=0.4
+```
+
 # 🚀 HƯỚNG DẪN TRAIN 2 MODELS - KIẾN TRÚC 2-STAGE
 
 > **Đã chuẩn bị xong datasets!** Bây giờ train 2 models riêng biệt.
@@ -117,10 +161,7 @@ yolo detect val `
   data=data/_stage1_motorcyclist/data.yaml
 
 # Test trên 1 ảnh
-yolo detect predict `
-  model=runs/detect/model1_motorcyclist/weights/best.pt `
-  source=img/test/test1.jpg `
-  conf=0.4
+yolo detect predict model=runs/detect/model1_motorcyclist/weights/best.pt source=img/test/test1.jpg conf=0.4
 ```
 
 ---
