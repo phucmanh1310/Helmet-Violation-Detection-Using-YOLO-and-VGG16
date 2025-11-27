@@ -76,7 +76,7 @@
 
 #### Intersection over Union (IoU)
 
-IoU đo độ overlap giữa predicted box và ground truth box:
+IoU đo độ overlap giữa predicted box và ground truth box. Là giá trị thể hiện sự giao thoa giữa hai box bất kỳ. Nếu hai box giao thoa càng nhiều thì giá trị này càng lớn.
 
 $$
 \text{IoU} = \frac{\text{Area of Overlap}}{\text{Area of Union}} = \frac{A \cap B}{A \cup B}
@@ -148,7 +148,7 @@ $$
 
 - **FN** (False Negative): Bỏ sót object
 
-**mAP** (mean Average Precision):
+**mAP** (mean Average Precision): là điểm số thể hiện mức độ chính xác của một mô hình học sâu khi thực hiện các tác vụ liên quan đến truy xuất thông tin thị giác, chẳng hạn như phát hiện và nhận dạng các đối tượng khác nhau trong một hình ảnh.
 
 $$
 \text{mAP} = \frac{1}{N} \sum_{i=1}^{N} AP_i

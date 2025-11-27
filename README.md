@@ -132,7 +132,7 @@ Dự án **Helmet Violation Detection** sử dụng **kiến trúc 2-Stage Detec
 ```yaml
 Python: >= 3.8 (khuyến nghị 3.13)
 CUDA: >= 11.8 (GPU) hoặc CPU
-GPU: NVIDIA RTX 3050+ (6GB+ VRAM)
+GPU: Nên sử dụng GPU tăng hiệu suất huấn luyện
 RAM: >= 8GB
 Storage: >= 10GB
 ```
@@ -202,6 +202,11 @@ for box in moto_boxes:
         print("🚨 Vi phạm phát hiện!")
 ```
 
+### Đọc thêm hướng dẫn khởi động
+
+Khởi động không cần UI: **[HUONG_DAN_CHAY.md](HUONG_DAN_CHAY.md)**
+Khởi động sử dụng UI: **[Huong_dan_UI.md](Huong_dan_UI.md)**
+
 ---
 
 ## 🏋️ Training Models
@@ -264,25 +269,27 @@ py -3.13 scripts/resume_model1_training.py
 ├── 📂 runs/                    # Training outputs
 ├── 📂 img/                     # Results
 │
-├── 📄 HUONG_DAN_TRAIN_2_MODELS.md
-├── 📄 LY_THUYET_VA_GIAI_THICH_CODE.md  # ⭐ Lý thuyết
-├── 📄 INDEX_TAI_LIEU.md
-├── 📄 README_UI.md
-├── 📄 quick_start_ui.py
-└── 📄 README.md               # File này
+├── 📂 docs/                  #  documents cua du an
+|   ├── 📄 LY_THUYET_VA_GIAI_THICH_CODE.md  # ⭐ Lý thuyết gồm 3 phần
+|   ├── 📄 INDEX_TAI_LIEU.md
+|   ├── 📄 KE_HOACH_CHI_TIET_NHOM.md
+|   ├── 📄 quick_start_ui.py
+|
+└── 📄 README.md
+└── 📄 README_UI.md
 ```
 
 ---
 
 ## 📚 Tài liệu
 
-| File                                                                   | Nội dung                       |
-| ---------------------------------------------------------------------- | ------------------------------ |
-| **[README.md](README.md)**                                             | Tổng quan dự án (file này)     |
-| **[HUONG_DAN_TRAIN_2_MODELS.md](HUONG_DAN_TRAIN_2_MODELS.md)**         | Hướng dẫn training chi tiết    |
-| **[LY_THUYET_VA_GIAI_THICH_CODE.md](LY_THUYET_VA_GIAI_THICH_CODE.md)** | 📖 Lý thuyết & giải thích code |
-| **[README_UI.md](README_UI.md)**                                       | Hướng dẫn Web UI               |
-| **[INDEX_TAI_LIEU.md](INDEX_TAI_LIEU.md)**                             | Index tài liệu                 |
+| File                                                                                    | Nội dung                       |
+| --------------------------------------------------------------------------------------- | ------------------------------ |
+| **[README.md](README.md)**                                                              | Tổng quan dự án (file này)     |
+| **[HUONG_DAN_TRAIN_2_MODELS.md](HUONG_DAN_TRAIN_2_MODELS.md)**                          | Hướng dẫn training chi tiết    |
+| **[LY_THUYET_VA_GIAI_THICH_CODE_Phan1.md](docs\LY_THUYET_VA_GIAI_THICH_CODE_PHAN1.md)** | 📖 Lý thuyết & giải thích code |
+| **[README_UI.md](README_UI.md)**                                                        | Hướng dẫn Web UI               |
+| **[INDEX_TAI_LIEU.md](INDEX_TAI_LIEU.md)**                                              | Index tài liệu                 |
 
 ---
 
@@ -338,7 +345,10 @@ py -3.13 scripts/resume_model1_training.py
 ### Current Maintainer
 
 - **GitHub**: [@phucmanh1310](https://github.com/phucmanh1310)
-- **Email**: samnguyen0510@gmail.com
+- **Email**: phucmanhtran08@gmail.com
+
+- **GitHub**: [@]()
+- **Email**:
 
 ---
 
@@ -363,7 +373,6 @@ MIT License - see [LICENSE](LICENSE)
 - **Datasets**:
   - Traffic: https://universe.roboflow.com/cdio-zmfmj/motobike-detection
   - Helmet/LP: https://universe.roboflow.com/cdio-zmfmj/helmet-lincense-plate-detection-gevlq
-- **Demo Video**: [Google Drive](https://drive.google.com/drive/folders/1tTR3yGx-8mPmHMBefnhqLmVeV9GLH44i)
 
 ---
 
