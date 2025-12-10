@@ -150,12 +150,48 @@ cd Helmet-Violation-Detection-Using-YOLO-and-VGG16
 pip install -r requirements.txt
 ```
 
-### Bước 3: Verify models
+### Bước 3: Setup Dataset
+
+**Option A: Download từ Google Drive (Nhanh nhất)**
+
+Dataset (~6GB) được lưu tại: [Google Drive](https://drive.google.com/drive/folders/1gcd40p0yV5krJvlOQVOs7RVOUhq54NBT)
+
+```bash
+# 1. Download folder "DataSet" từ Drive trên
+# 2. Extract vào thư mục project
+# 3. Rename thành "data" nếu cần
+# Structure sau khi extract:
+#   data/
+#   ├── _merged_all/          (merged dataset từ 3 sources)
+#   ├── _stage1_motorcyclist/ (dataset for Model 1)
+#   ├── _stage2_helmet_lp_crops/ (dataset for Model 2 - crops)
+#   └── _stage2_helmet_lp_fullscene/ (dataset for Model 2 - full scene)
+```
+
+**Option B: Auto-generate từ Roboflow (Nếu có account)**
+
+```bash
+# Require: Roboflow account + API key
+# Chỉnh config/roboflow_config.json
+py -3.13 scripts/merge_and_prepare_datasets.py
+py -3.13 scripts/filter_labels_by_classes.py ...
+py -3.13 scripts/make_roi_crops_from_class.py ...
+```
+
+**Option C: Skip dataset (Inference only)**
+
+Nếu chỉ muốn test inference:
+```bash
+# Dùng ảnh test trong img/test/
+# Dataset không bắt buộc
+```
+
+### Bước 4: Verify models
 
 Kiểm tra models đã có trong `models/`:
 
-- ✅ `Motov10l.pt` - Model 1
-- ✅ `HelmetLP.pt` - Model 2
+- ✅ `Motov10l.pt` - Model 1 (Motorcyclist Detection)
+- ✅ `HelmetLP.pt` - Model 2 (Helmet/LP Detection)
 
 Nếu chưa có, train theo [HUONG_DAN_TRAIN_2_MODELS.md](HUONG_DAN_TRAIN_2_MODELS.md)
 
