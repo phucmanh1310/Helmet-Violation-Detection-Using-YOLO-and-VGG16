@@ -181,6 +181,7 @@ py -3.13 scripts/make_roi_crops_from_class.py ...
 **Option C: Skip dataset (Inference only)**
 
 Nếu chỉ muốn test inference:
+
 ```bash
 # Dùng ảnh test trong img/test/
 # Dataset không bắt buộc
