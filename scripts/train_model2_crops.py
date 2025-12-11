@@ -25,12 +25,43 @@ def main():
     print("=" * 70)
     print()
 
+    # config = {
+    #     'model': 'yolov8n.pt',
+    #     'data': 'data/_stage2_helmet_lp_crops/data.yaml',
+    #     'epochs': 50,
+    #     'imgsz': 768,  # Higher resolution for small objects
+    #     'batch': 16,
+    #     'optimizer': 'AdamW',
+    #     'lr0': 0.01,
+    #     'lrf': 0.01,
+    #     'patience': 50,
+    #     # Augmentation
+    #     'hsv_h': 0.015,
+    #     'hsv_s': 0.7,
+    #     'hsv_v': 0.4,
+    #     'degrees': 10,
+    #     'translate': 0.1,
+    #     'scale': 0.5,
+    #     'flipud': 0.0,
+    #     'fliplr': 0.5,
+    #     'mosaic': 1.0,
+    #     # Other
+    #     'project': 'runs/detect',
+    #     'name': 'model2_crops',
+    #     'device': 0,
+    #     'verbose': True,
+    #     'save': True,
+    #     'save_period': 10,
+    #     'val': True,
+    #     'workers': 2,
+    # }
+    #mini for demo
     config = {
         'model': 'yolov8n.pt',
         'data': 'data/_stage2_helmet_lp_crops/data.yaml',
-        'epochs': 50,
-        'imgsz': 768,  # Higher resolution for small objects
-        'batch': 16,
+        'epochs': 1,
+        'imgsz': 64,  # Higher resolution for small objects
+        'batch': 8,
         'optimizer': 'AdamW',
         'lr0': 0.01,
         'lrf': 0.01,
@@ -47,7 +78,7 @@ def main():
         'mosaic': 1.0,
         # Other
         'project': 'runs/detect',
-        'name': 'model2_crops',
+        'name': 'model2_crops_mini',
         'device': 0,
         'verbose': True,
         'save': True,

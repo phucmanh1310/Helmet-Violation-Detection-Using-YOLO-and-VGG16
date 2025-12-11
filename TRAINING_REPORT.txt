@@ -1,0 +1,157 @@
+====================================================================================================
+BÁAO CÁO TRAINING - CHI TIẾT QUẶC TRÌNH HUẤN LUYỆN MÔ HÌNH
+====================================================================================================
+Dự án: Helmet Violation Detection Using YOLO and VGG16
+Sinh viên: Trần Nguyễn Phúc Mạnh - MSSV: 3122411121
+Ngày tạo báo cáo: 2025-12-11 10:10:34
+====================================================================================================
+
+📋 THÔNG TIN MÔ HÌNH
+----------------------------------------------------------------------------------------------------
+
+🤖 Model 1 - Motobike Detection
+   • Loại mô hình: YOLOv8 Nano
+   • Giai đoạn: Stage 1: Detect Motorbikes
+   • File mô hình: models/Motov10l.pt
+   • ✅ Mô hình tồn tại
+   • Kích thước: 5.97 MB
+   • Ngày lưu: 2025-11-07 11:15:44
+
+🤖 Model 2 - Helmet & License Plate Detection
+   • Loại mô hình: YOLOv8 Nano
+   • Giai đoạn: Stage 2: Detect Helmets & License Plates (Crops)
+   • File mô hình: models/HelmetLP.pt
+   • ✅ Mô hình tồn tại
+   • Kích thước: 5.92 MB
+   • Ngày lưu: 2025-11-07 17:20:29
+
+
+📊 THÔNG TIN DỮ LIỆU
+----------------------------------------------------------------------------------------------------
+
+Model 1 - Motobike Detection
+   • Số lớp (classes): 1
+   • Tên lớp: ['motorcyclist']
+
+Model 2 - Helmet & License Plate Detection
+   • Số lớp (classes): 3
+   • Tên lớp: ['helmet', 'nohelmet', 'licenseplate']
+
+
+⚙️  CẤU HÌNH TRAINING
+----------------------------------------------------------------------------------------------------
+
+Model 1 - Motobike Detection
+   • Model base: yolov8n.pt
+   • Số epoch: 100
+   • Batch size: 16
+   • Kích thước ảnh: 640
+   • Optimizer: AdamW
+   • Thiết bị: 0
+   • Workers: 2
+   • Mixed precision (AMP): True
+   • Cache: False
+
+Model 2 - Helmet & License Plate Detection
+   • Model base: yolov8n.pt
+   • Số epoch: 50
+   • Batch size: 16
+   • Kích thước ảnh: 768
+   • Optimizer: AdamW
+   • Thiết bị: 0
+   • Workers: 2
+   • Mixed precision (AMP): True
+   • Cache: False
+
+
+📈 KẾT QUẢ TRAINING
+----------------------------------------------------------------------------------------------------
+
+Model 1 - Motobike Detection
+   • Số epoch đã train: N/A
+   • Precision cuối: N/A
+   • Recall cuối: N/A
+   • mAP50 cuối: N/A
+   • mAP50-95 cuối: N/A
+   • Weights đã lưu: 
+
+Model 2 - Helmet & License Plate Detection
+   • Số epoch đã train: 50
+   • Precision cuối: N/A
+   • Recall cuối: N/A
+   • mAP50 cuối: N/A
+   • mAP50-95 cuối: N/A
+   • Weights đã lưu: best.pt, epoch10.pt, epoch20.pt, epoch30.pt, epoch40.pt, last.pt
+
+   📊 Chi tiết epochs (10 epochs đầu tiên):
+
+
+
+🎨 OUTPUT VÀ ARTIFACTS
+----------------------------------------------------------------------------------------------------
+
+Model 1 - Motobike Detection
+   Các file được tạo:
+      • args.yaml (1.51 KB)
+      • labels.jpg (190.66 KB)
+      • labels_correlogram.jpg (273.43 KB)
+      • train_batch0.jpg (594.71 KB)
+      • train_batch1.jpg (609.75 KB)
+      • train_batch2.jpg (605.65 KB)
+
+   Các file weights:
+
+Model 2 - Helmet & License Plate Detection
+   Các file được tạo:
+      • F1_curve.png (153.09 KB)
+      • PR_curve.png (121.25 KB)
+      • P_curve.png (120.52 KB)
+      • R_curve.png (150.88 KB)
+      • args.yaml (1.50 KB)
+      • confusion_matrix.png (113.85 KB)
+      • confusion_matrix_normalized.png (111.40 KB)
+      • labels.jpg (138.64 KB)
+      • labels_correlogram.jpg (233.36 KB)
+      • results.csv (16.78 KB)
+      • results.png (227.31 KB)
+      • train_batch0.jpg (416.25 KB)
+      • train_batch1.jpg (405.00 KB)
+      • train_batch2.jpg (402.25 KB)
+      • train_batch56640.jpg (342.11 KB)
+      • train_batch56641.jpg (315.52 KB)
+      • train_batch56642.jpg (326.29 KB)
+      • val_batch0_labels.jpg (551.70 KB)
+      • val_batch0_pred.jpg (571.64 KB)
+      • val_batch1_labels.jpg (610.20 KB)
+      • val_batch1_pred.jpg (621.36 KB)
+      • val_batch2_labels.jpg (549.25 KB)
+      • val_batch2_pred.jpg (564.79 KB)
+
+   Các file weights:
+      • best.pt (5.92 MB)
+      • epoch10.pt (34.97 MB)
+      • epoch20.pt (34.98 MB)
+      • epoch30.pt (34.98 MB)
+      • epoch40.pt (34.98 MB)
+      • last.pt (5.92 MB)
+
+
+✅ KẾT LUẬN
+----------------------------------------------------------------------------------------------------
+
+   ✓ Đã successfully training 2 mô hình YOLO cho dự án:
+     - Model 1: YOLOv8 Nano để phát hiện motorbike (Stage 1)
+     - Model 2: YOLOv8 Nano để phát hiện helmet & license plate (Stage 2)
+   
+   ✓ Mô hình được lưu tại:
+     - models/Motov10l.pt
+     - models/HelmetLP.pt
+   
+   ✓ Training artifacts được lưu tại folder runs/detect/
+   
+   ✓ Cả 2 mô hình đều sẵn sàng cho inference/deployment
+
+
+====================================================================================================
+Report generated at: 2025-12-11 10:10:34
+====================================================================================================

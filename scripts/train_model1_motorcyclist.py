@@ -29,19 +29,40 @@ def main():
     print("=" * 70)
     print()
 
-    # Configuration
+    # # Configuration
+    # config = {
+    #     'model': 'yolov8n.pt',
+    #     'data': 'data/_stage1_motorcyclist/data.yaml',
+    #     'epochs': 50,
+    #     'imgsz': 640,
+    #     'batch': 16,
+    #     'optimizer': 'AdamW',
+    #     'lr0': 0.01,
+    #     'lrf': 0.01,
+    #     'patience': 50,
+    #     'project': 'runs/detect',
+    #     'name': 'model1_motorcyclist',
+    #     'device': 0,
+    #     'verbose': True,
+    #     'save': True,
+    #     'save_period': 10,
+    #     'val': True,
+    #     # Tránh lỗi multiprocessing trên Windows khi không có main-guard
+    #     'workers': 2,
+    # }
+# mini Configuration
     config = {
         'model': 'yolov8n.pt',
         'data': 'data/_stage1_motorcyclist/data.yaml',
-        'epochs': 50,
-        'imgsz': 640,
-        'batch': 16,
-        'optimizer': 'AdamW',
+        'epochs': 1,
+        'imgsz': 64,
+        'batch': 8,
+        'optimizer': 'AdamW',# 
         'lr0': 0.01,
         'lrf': 0.01,
         'patience': 50,
         'project': 'runs/detect',
-        'name': 'model1_motorcyclist',
+        'name': 'model1_motorcyclist_mini',
         'device': 0,
         'verbose': True,
         'save': True,
